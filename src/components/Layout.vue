@@ -22,11 +22,11 @@ export default {
 
 <style lang="scss">
   $navHeight: 100px;
-  #Layout {
+  #layout {
     width: 100%;
     height: 100vh;
     overflow-y: overlay;
-    #NavbarBox {
+    #navbarBox {
       height: $navHeight;
       top :0;
       z-index: 10;

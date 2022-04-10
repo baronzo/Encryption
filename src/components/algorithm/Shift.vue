@@ -1,6 +1,6 @@
 <template>
   <div id="Mono">
-    <div id="title">Monoalphabetic Substitution Cipher</div>
+    <div id="title">Shift Cipher</div>
     <div id="changeMode">
       <div id="mode" v-if="mode" @click="mode = !mode">Encoded</div>
       <div id="mode" v-if="!mode" @click="mode = !mode">Decoded</div>
@@ -29,32 +29,36 @@
 </template>
 
 <script lang="ts">
-export default {
-  alpha: "abcdefghijklmnopqrstuvwxyz",
-  name: "MonoComponent",
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'ShiftComponent',
+  mounted() {
+    this.cal()
+  },
   data() {
     return {
-      mode: false,
-      keyInput: "",
-      messageInput: "",
-    };
+      test: 1
+    }
   },
-  method: {
-    encrypt() {
-      
-    },
-  }
-};
+  methods: {
+    cal() {
+      const vm = this
+      let num = 1
+      console.log(vm.test + num)
+    }
+  },
+})
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 #Mono {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 120px);
+  margin-top: 10px;
   #title {
     font-size: 2em;
     font-weight: bold;
-    margin-top: 1%;
+    margin-top: 0;
     display: flex;
     justify-content: center;
   }
@@ -82,8 +86,8 @@ export default {
     #keyBox {
       width: 45%;
       #keyHeader {
-        font-size: 1.5em;
-        padding-left: 1%;
+        font-size: 1.2em;
+        padding: 10px;
         border-top: 1px solid rgb(0, 0, 0, 0.25);
         border-left: 1px solid rgb(0, 0, 0, 0.25);
         border-right: 1px solid rgb(0, 0, 0, 0.25);
@@ -109,8 +113,8 @@ export default {
       margin-left: 2.5%;
       width: 50%;
       #pHeader {
-        font-size: 1.5em;
-        padding-left: 1%;
+        font-size: 1.2em;
+        padding: 10px;
         border-top: 1px solid rgb(0, 0, 0, 0.25);
         border-left: 1px solid rgb(0, 0, 0, 0.25);
         border-right: 1px solid rgb(0, 0, 0, 0.25);
@@ -131,8 +135,8 @@ export default {
         }
       }
       #cHeader {
-        font-size: 1.5em;
-        padding-left: 1%;
+        font-size: 1.2em;
+        padding: 10px;
         border-top: 1px solid rgb(0, 0, 0, 0.25);
         border-left: 1px solid rgb(0, 0, 0, 0.25);
         border-right: 1px solid rgb(0, 0, 0, 0.25);

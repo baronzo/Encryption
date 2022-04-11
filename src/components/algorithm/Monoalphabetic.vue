@@ -6,23 +6,37 @@
         <div id="keyBox">
           <div id="keyHeader">Key</div>
           <div id="keyInputBox">
-            <textarea id="keyInput" type="text" v-model="keyInput"/>
+            <textarea id="keyInput" type="text" v-model="keyInput" maxlength="26"/>
           </div>
-          <div id="genBox"><div id="genKey">Generate Key</div></div>
+          <div id="genBox"><div id="genKey" @click="generateKey()">Generate Key</div></div>
         </div>
         <div id="messageBox">
-          <div id="pHeader">Plain Text</div>
+          <div id="pHeader" v-if="mode">Plain Text</div>
+          <div id="pHeader" v-if="!mode">Encoded</div>
           <div id="pInputBox">
-            <textarea id="pInput" type="text" v-model="messageInput"/>
+            <textarea id="pInput" type="text" v-model="messageInput" maxlength="26"/>
           </div>
-          <div id="swapBox"><div id="swap"><i id="iSwap" class="fas fa-arrows-alt-v"></i></div></div>
-          <div id="cHeader">Encoded</div>
+          <div id="swapBox">
+            <div id="swap" class="swapIcon" @click="changeMode()">
+              <i id="iSwap" class="fas fa-arrows-alt-v"></i>
+              <i id="iSwap" class="fas fa-arrow-down"></i>
+            </div>
+          </div>
+          <div id="cHeader" v-if="mode">Encoded</div>
+          <div id="cHeader" v-if="!mode">Key</div>
           <div id="cValueBox">
-            <textarea id="cInput" type="text" v-model="encryptInput"/>
+            <textarea
+              id="cInput"
+              type="text"
+              v-model="encryptInput"
+              :disabled="true"
+            />
           </div>
           <div id="buttonBox">
             <div id="buttonMono" @click="selectMode()" v-if="mode">Encrypt</div>
-            <div id="buttonMono" @click="selectMode()" v-if="!mode">Decrypt</div>
+            <div id="buttonMono" @click="selectMode()" v-if="!mode">
+              Decrypt
+            </div>
           </div>
         </div>
       </div>
@@ -54,51 +68,72 @@ export default defineComponent({
     encrypt() {
       this.messageInput = this.messageInput.toUpperCase();
       this.keyInput = this.keyInput.toUpperCase();
-      console.log(this.alpha);
-      console.log(this.messageInput);
-      console.log(this.keyInput);
       let answer = "";
       for (let i = 0; i < this.messageInput.length; i++) {
         console.log(this.alpha.indexOf(this.keyInput[i]));
         if (this.messageInput[i] == " ") {
           answer += " ";
         } else {
-          answer += this.alpha[(this.alpha.indexOf(this.messageInput[i]) + this.alpha.indexOf(this.keyInput[i])) % 26];
+          answer +=
+            this.alpha[
+              (this.alpha.indexOf(this.messageInput[i]) +
+                this.alpha.indexOf(this.keyInput[i])) %
+                26
+            ];
         }
       }
       this.encryptInput = answer;
     },
     decrypt() {
-      this.encryptInput = this.encryptInput.toUpperCase();
-      //this.messageInput = this.messageInput.toUpperCase();
+      this.messageInput = this.messageInput.toUpperCase();
       this.keyInput = this.keyInput.toUpperCase();
       let answer = "";
-      /*for (let i = 0; i < this.messageInput.length; i++) {
+      for (let i = 0; i < this.messageInput.length; i++) {
         console.log(this.alpha.indexOf(this.keyInput[i]));
         if (this.messageInput[i] == " ") {
           answer += " ";
         } else {
-          if (this.alpha.indexOf(this.messageInput[i]) - this.alpha.indexOf(this.keyInput[i]) < 0) {
-            answer += this.alpha[(this.alpha.indexOf(this.messageInput[i]) - this.alpha.indexOf(this.keyInput[i])) + 26];
+          if (
+            this.alpha.indexOf(this.messageInput[i]) -
+              this.alpha.indexOf(this.keyInput[i]) <
+            0
+          ) {
+            answer +=
+              this.alpha[
+                this.alpha.indexOf(this.messageInput[i]) -
+                  this.alpha.indexOf(this.keyInput[i]) +
+                  26
+              ];
           } else {
-            answer += this.alpha[(this.alpha.indexOf(this.messageInput[i]) - this.alpha.indexOf(this.keyInput[i])) % 26];
-          }
-        }
-      }*/
-      for (let i = 0; i < this.encryptInput.length; i++) {
-        console.log(this.alpha.indexOf(this.keyInput[i]));
-        if (this.encryptInput[i] == " ") {
-          answer += " ";
-        } else {
-          if (this.alpha.indexOf(this.encryptInput[i]) - this.alpha.indexOf(this.keyInput[i]) < 0) {
-            answer += this.alpha[(this.alpha.indexOf(this.encryptInput[i]) - this.alpha.indexOf(this.keyInput[i])) + 26];
-          } else {
-            answer += this.alpha[(this.alpha.indexOf(this.encryptInput[i]) - this.alpha.indexOf(this.keyInput[i])) % 26];
+            answer +=
+              this.alpha[
+                this.alpha.indexOf(this.messageInput[i]) -
+                  (this.alpha.indexOf(this.keyInput[i]) % 26)
+              ];
           }
         }
       }
-      //this.encryptInput = answer;
-      this.messageInput = answer;
+      this.encryptInput = answer;
+    },
+    changeMode() {
+      this.mode = !this.mode;
+      let first, second;
+      first = this.messageInput;
+      second = this.encryptInput;
+      this.messageInput = second;
+      this.encryptInput = first;
+    },
+    generateKey() {
+      let key = "";
+      while (key.length < this.messageInput.length) {
+        let rndInt = Math.random() * 26 + 1;
+        if (key.includes(this.alpha[rndInt - 1])) {
+          continue;
+        } else {
+          key += this.alpha[rndInt - 1];
+        }
+      }
+      this.keyInput = key;
     },
   },
 });

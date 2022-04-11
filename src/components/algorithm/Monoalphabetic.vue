@@ -10,7 +10,7 @@
               id="keyInput"
               type="text"
               v-model="keyInput"
-              maxlength="26"
+              @keyup="checkMessage(keyInput)"
             />
           </div>
           <div id="genBox">
@@ -82,7 +82,6 @@ export default defineComponent({
       this.keyInput = this.keyInput.toUpperCase();
       let answer = "";
       for (let i = 0; i < this.messageInput.length; i++) {
-        console.log(this.alpha.indexOf(this.keyInput[i]));
         if (this.messageInput[i] == " ") {
           answer += " ";
         } else {
@@ -101,7 +100,6 @@ export default defineComponent({
       this.keyInput = this.keyInput.toUpperCase();
       let answer = "";
       for (let i = 0; i < this.messageInput.length; i++) {
-        console.log(this.alpha.indexOf(this.keyInput[i]));
         if (this.messageInput[i] == " ") {
           answer += " ";
         } else {
@@ -148,6 +146,12 @@ export default defineComponent({
         }
       }
       this.keyInput = key;
+    },
+    checkMessage(key:string) {
+      let message = this.messageInput.replace(/\s/g, "");
+      if (key.length > message.length) {
+        this.keyInput = key.substring(0, key.length - 1);
+      }
     },
   },
 });

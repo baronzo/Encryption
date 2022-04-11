@@ -6,15 +6,27 @@
         <div id="keyBox">
           <div id="keyHeader">Key</div>
           <div id="keyInputBox">
-            <textarea id="keyInput" type="text" v-model="keyInput" maxlength="26"/>
+            <textarea
+              id="keyInput"
+              type="text"
+              v-model="keyInput"
+              maxlength="26"
+            />
           </div>
-          <div id="genBox"><div id="genKey" @click="generateKey()">Generate Key</div></div>
+          <div id="genBox">
+            <div id="genKey" @click="generateKey()">Generate Key</div>
+          </div>
         </div>
         <div id="messageBox">
           <div id="pHeader" v-if="mode">Plain Text</div>
           <div id="pHeader" v-if="!mode">Encoded</div>
           <div id="pInputBox">
-            <textarea id="pInput" type="text" v-model="messageInput" maxlength="26"/>
+            <textarea
+              id="pInput"
+              type="text"
+              v-model="messageInput"
+              maxlength="26"
+            />
           </div>
           <div id="swapBox">
             <div id="swap" class="swapIcon" @click="changeMode()">
@@ -125,8 +137,10 @@ export default defineComponent({
     },
     generateKey() {
       let key = "";
-      while (key.length < this.messageInput.length) {
+      let message = this.messageInput.replace(/\s/g, "");
+      while (key.length < message.length) {
         let rndInt = Math.random() * 26 + 1;
+        rndInt = parseInt(String(rndInt));
         if (key.includes(this.alpha[rndInt - 1])) {
           continue;
         } else {
@@ -139,6 +153,6 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../style/Monoalphabetic.scss";
 </style>

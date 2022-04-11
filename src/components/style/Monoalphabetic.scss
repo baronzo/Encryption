@@ -25,6 +25,7 @@
           font-size: 1.25rem;
           padding: 10px 0 10px 0;
           height: 8%;
+          user-select: none;
         }
         #keyInputBox {
           border: 1px solid rgb(0, 0, 0, 0.25);
@@ -68,6 +69,7 @@
         font-size: 1.25rem;
         padding: 10px 0 10px 0;
         height: 8%;
+        user-select: none;
       }
       #pInputBox {
         border: 1px solid rgb(0, 0, 0, 0.25);
@@ -106,11 +108,22 @@
             }
           }
         }
+        .swapIcon .fa-arrows-alt-v {
+          display: none;
+        }
+        .swapIcon:hover .fa-arrows-alt-v{
+          display: inline-block;
+          
+        }
+        .swapIcon:hover .fa-arrow-down{
+          display: none;
+        }
       }
       #cHeader {
         font-size: 1.25rem;
         padding: 10px 0 10px 0;
         height: 8%;
+        user-select: none;
       }
       #cValueBox {
         height: 32%;
@@ -143,6 +156,7 @@
           background-color: #5fd6fc;
           color: #fff;
           cursor: pointer;
+          user-select: none;
         }
       }
     }

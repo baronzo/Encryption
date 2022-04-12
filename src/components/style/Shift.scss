@@ -1,0 +1,164 @@
+#Mono {
+    width: 100%;
+    height: calc(100vh - 120px);
+    #title {
+      font-size: 2rem;
+      margin-top: 1%;
+      display: flex;
+      justify-content: center;
+    }
+    #monoBox {
+      margin: 1% 0 0 0;
+      width: 100%;
+      height: 90%;
+      max-height: 90%;
+      display: flex;
+      justify-content: center;
+      #inOutPutBox {
+        display: flex;
+        height: 100%;
+        width: 75%;
+        #keyBox {
+          width: 45%;
+          height: 100%;
+          #keyHeader {
+            font-size: 1.25rem;
+            padding: 10px 0 10px 0;
+            height: 8%;
+            user-select: none;
+          }
+          #keyInputBox {
+            border: 1px solid rgb(0, 0, 0, 0.25);
+            border-radius: 3px;
+            height: 82%;
+            #keyInput {
+              border: none;
+              outline: none;
+              width: 100%;
+              height: 100%;
+              padding: 10px 0 0 10px;
+              font-size: 1.1rem;
+              resize: none;
+              text-transform: uppercase;
+            }
+          }
+          #genBox {
+            height: 10%;
+            display: flex;
+            align-items: end;
+            #genKey {
+              height: 70%;
+              width: 100%;
+              border-radius: 3px;
+              font-size: 1.5rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #5fd6fc;
+              color: #fff;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      #messageBox {
+        margin-left: 2.5%;
+        width: 50%;
+        height: 100%;
+        #pHeader {
+          font-size: 1.25rem;
+          padding: 10px 0 10px 0;
+          height: 8%;
+          user-select: none;
+        }
+        #pInputBox {
+          border: 1px solid rgb(0, 0, 0, 0.25);
+          border-radius: 3px;
+          height: 32%;
+          #pInput {
+            border: none;
+            width: 100%;
+            height: 100%;
+            outline: none;
+            padding: 10px 0 0 10px;
+            font-size: 1.1rem;
+            resize: none;
+            text-transform: uppercase;
+          }
+        }
+        #swapBox {
+          height: 10%;
+          display: flex;
+          justify-content: center;
+          align-items: end;
+          #swap {
+            width: 15%;
+            height: 70%;
+            border-radius: 3px;
+            background-color: #5fd6fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            &:hover {
+              #iSwap {
+                transform: scale(1.175);
+                transition: 0.5s;
+              }
+            }
+          }
+          .swapIcon .fa-arrows-alt-v {
+            display: none;
+          }
+          .swapIcon:hover .fa-arrows-alt-v {
+            display: inline-block;
+          }
+          .swapIcon:hover .fa-arrow-down {
+            display: none;
+          }
+        }
+        #cHeader {
+          font-size: 1.25rem;
+          padding: 10px 0 10px 0;
+          height: 8%;
+          user-select: none;
+        }
+        #cValueBox {
+          height: 32%;
+          #cInput {
+            background-color: #fff !important;
+            border: none;
+            border: 1px solid rgb(0, 0, 0, 0.25);
+            border-radius: 3px;
+            width: 100%;
+            outline: none;
+            height: 100%;
+            padding: 10px 0 0 10px;
+            font-size: 1.1rem;
+            resize: none;
+            text-transform: uppercase;
+          }
+        }
+        #buttonBox {
+          height: 10%;
+          display: flex;
+          align-items: end;
+          #buttonMono {
+            height: 70%;
+            width: 100%;
+            border-radius: 3px;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #5fd6fc;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+          }
+        }
+      }
+    }
+  }
+  

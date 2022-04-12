@@ -35,7 +35,7 @@
             </div>
           </div>
           <div id="cHeader" v-if="mode">Encoded</div>
-          <div id="cHeader" v-if="!mode">Key</div>
+          <div id="cHeader" v-if="!mode">Plain Text</div>
           <div id="cValueBox">
             <textarea
               id="cInput"

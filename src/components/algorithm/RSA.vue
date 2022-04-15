@@ -9,7 +9,7 @@
                 id="input"
                 type="text"
                 maxlength="26"
-                v-model="messageInput"
+                v-model="publicKey"
             />
         </div>
         <div class="box-title">Private Key</div>
@@ -18,7 +18,7 @@
                 id="input"
                 type="text"
                 maxlength="26"
-                v-model="messageInput"
+                v-model="privateKey"
             />
         </div>
         <div class="button">Generate Key Pair</div>
@@ -30,19 +30,19 @@
                 id="input"
                 type="text"
                 maxlength="26"
-                v-model="messageInput"
+                v-model="plainText"
             />
         </div>
-        <div class="box-title">Encoded</div>
+        <div class="box-title">encoded</div>
         <div class="input-box">
             <textarea
                 id="input"
                 type="text"
                 maxlength="26"
-                v-model="messageInput"
+                v-model="encoded"
             />
         </div>
-        <div class="button">Encrypt</div>
+        <div @click="greeting" class="button">Encrypt</div>
       </div>
 
     </div>
@@ -51,7 +51,15 @@
 
 <script lang="ts">
 export default {
-  name: 'RSAComponent'
+  data() {
+    return {
+      privateKey: "",
+      publicKey: "",
+      plainText: "",
+      encoded: "",
+      count: 0
+    }
+  }
 }
 </script>
 

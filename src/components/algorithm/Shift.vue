@@ -1,20 +1,19 @@
 <template>
-  <div id="Mono">
+  <div id="shift">
     <div id="title">Shift Cipher</div>
-    <div id="monoBox">
+    <div id="shiftBox">
       <div id="inOutPutBox">
         <div id="keyBox">
           <div id="keyHeader">Key</div>
           <div id="keyInputBox">
-            <textarea
+            <input
               id="keyInput"
-              type="text"
+              type="number"
               v-model="keyInput"
-              @keyup="checkMessage(keyInput)"
+              minlength="1"
+              maxlength="25"
+              required
             />
-          </div>
-          <div id="genBox">
-            <div id="genKey" @click="generateKey()">Generate Key</div>
           </div>
         </div>
         <div id="messageBox">
@@ -25,7 +24,6 @@
               id="pInput"
               type="text"
               v-model="messageInput"
-              maxlength="26"
             />
           </div>
           <div id="swapBox">
@@ -45,8 +43,10 @@
             />
           </div>
           <div id="buttonBox">
-            <div id="buttonMono" @click="selectMode()" v-if="mode">Encrypt</div>
-            <div id="buttonMono" @click="selectMode()" v-if="!mode">
+            <div class="button-shift" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/) ? null : selectMode()" v-if="mode" 
+                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/)}">Encrypt</div>
+            <div class="button-shift" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/) ? null : selectMode()" v-if="!mode"
+                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/)}">
               Decrypt
             </div>
           </div>
@@ -59,14 +59,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "MonoComponent",
+  name: "ShiftComponent",
   data() {
     return {
       mode: true,
-      keyInput: "",
+      keyInput: 0 as Number,
       messageInput: "",
       encryptInput: "",
-      alpha: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      // alpha: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      alpha: "abcdefghijklmnopqrstuvwxyz"
     };
   },
   methods: {
@@ -78,20 +79,27 @@ export default defineComponent({
       }
     },
     encrypt() {
-      let message = this.messageInput.toUpperCase();
+      let message = this.messageInput
+      if(!message.match(/^[a-zA-Z]*$/)) {
+        message = ''
+      }
       let keyNumber = Number(this.keyInput);
+      if(keyNumber < 0) {
+        keyNumber = 0
+      }
       let answer = "";
       for (let index = 0; index < message.length; index++) {
           if (this.messageInput[index] == " ") {
           answer += " ";
-        } else {
+        }
+         else {
           answer += this.alpha[(this.alpha.indexOf(message[index]) + keyNumber) % 26];
         }
       }
       this.encryptInput = answer; 
     },
     decrypt() {
-      let message = this.messageInput.toUpperCase();
+      let message = this.messageInput
       let keyNumber = Number(this.keyInput);
       let answer = "";
       for (let index = 0; index < message.length; index++) {
@@ -114,26 +122,6 @@ export default defineComponent({
       second = this.encryptInput;
       this.messageInput = second;
       this.encryptInput = first;
-    },
-    generateKey() {
-      let key = "";
-      let message = this.messageInput.replace(/\s/g, "");
-      while (key.length < message.length) {
-        let rndInt = Math.random() * 26 + 1;
-        rndInt = parseInt(String(rndInt));
-        if (key.includes(this.alpha[rndInt - 1])) {
-          continue;
-        } else {
-          key += this.alpha[rndInt - 1];
-        }
-      }
-      this.keyInput = key;
-    },
-    checkMessage(key:string) {
-      let message = this.messageInput.replace(/\s/g, "");
-      if (key.length > message.length) {
-        this.keyInput = key.substring(0, key.length - 1);
-      }
     },
   },
 });

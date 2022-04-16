@@ -45,10 +45,10 @@
             />
           </div>
           <div id="buttonBox">
-            <div id="buttonMono" @click="selectMode()" v-if="mode">Encrypt</div>
-            <div id="buttonMono" @click="selectMode()" v-if="!mode">
-              Decrypt
-            </div>
+            <div class="button-mono" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/) ? null : selectMode()" v-if="mode"
+                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/)}">Encrypt</div>
+            <div class="button-mono" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/) ? null : selectMode()" v-if="!mode"
+                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/)}">Decrypt</div>
           </div>
         </div>
       </div>

@@ -8,9 +8,6 @@
           <div id="keyInputBox">
             <textarea id="keyInput" type="text" v-model="keyInput" />
           </div>
-          <div id="genBox">
-            <div id="genKey" @click="generateKey()">Generate Key</div>
-          </div>
         </div>
         <div id="messageBox">
           <div id="pHeader" v-if="mode">Plain Text</div>
@@ -172,20 +169,6 @@ export default defineComponent({
       second = this.encryptInput;
       this.messageInput = second;
       this.encryptInput = first;
-    },
-    generateKey() {
-      let key = "";
-      let message = this.messageInput.replace(/\s/g, "");
-      while (key.length < message.length) {
-        let rndInt = Math.random() * 26 + 1;
-        rndInt = parseInt(String(rndInt));
-        if (key.includes(this.alpha[rndInt - 1])) {
-          continue;
-        } else {
-          key += this.alpha[rndInt - 1];
-        }
-      }
-      this.keyInput = key;
     },
   },
 });

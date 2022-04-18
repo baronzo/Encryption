@@ -10,7 +10,7 @@
               id="keyInput"
               type="text"
               v-model="keyInput"
-              @keyup="checkMessage(keyInput)"
+              maxlength="26"
             />
           </div>
           <div id="genBox">
@@ -25,7 +25,6 @@
               id="pInput"
               type="text"
               v-model="messageInput"
-              maxlength="26"
             />
           </div>
           <div id="swapBox">
@@ -45,10 +44,10 @@
             />
           </div>
           <div id="buttonBox">
-            <div class="button-mono" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/) ? null : selectMode()" v-if="mode"
-                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/)}">Encrypt</div>
-            <div class="button-mono" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/) ? null : selectMode()" v-if="!mode"
-                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z]*$/)}">Decrypt</div>
+            <div class="button-mono" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z\s]*$/) ? null : selectMode()" v-if="mode"
+                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z\s]*$/)}">Encrypt</div>
+            <div class="button-mono" @click=" keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z\s]*$/) ? null : selectMode()" v-if="!mode"
+                :class="{disable: keyInput == '' || messageInput == '' || !messageInput.match(/^[a-zA-Z\s]*$/)}">Decrypt</div>
           </div>
         </div>
       </div>
@@ -78,52 +77,43 @@ export default defineComponent({
       }
     },
     encrypt() {
-      this.messageInput = this.messageInput.toUpperCase();
-      this.keyInput = this.keyInput.toUpperCase();
+      let message = this.messageInput.toUpperCase();
+      let key = this.keyInput.toUpperCase();
+      if (this.checkKey(key, message))
+      {
+        return;
+      }
       let answer = "";
-      for (let i = 0; i < this.messageInput.length; i++) {
-        if (this.messageInput[i] == " ") {
+      for (let i = 0; i < message.length; i++) {
+        if (message[i] == " ") {
           answer += " ";
         } else {
-          answer +=
-            this.alpha[
-              (this.alpha.indexOf(this.messageInput[i]) +
-                this.alpha.indexOf(this.keyInput[i])) %
-                26
-            ];
+          answer += this.alpha[(this.alpha.indexOf(message[i]) + this.alpha.indexOf(key[i])) % 26];
         }
       }
-      this.encryptInput = answer;
+      this.encryptInput = this.checkUpperLowerCase(answer);
     },
     decrypt() {
-      this.messageInput = this.messageInput.toUpperCase();
-      this.keyInput = this.keyInput.toUpperCase();
+      let message = this.messageInput.toUpperCase();
+      let key = this.keyInput.toUpperCase();
+      if (this.checkKey(key, message))
+      {
+        return;
+      }
       let answer = "";
-      for (let i = 0; i < this.messageInput.length; i++) {
-        if (this.messageInput[i] == " ") {
+      for (let i = 0; i < message.length; i++) {
+        if (message[i] == " ") {
           answer += " ";
         } else {
-          if (
-            this.alpha.indexOf(this.messageInput[i]) -
-              this.alpha.indexOf(this.keyInput[i]) <
-            0
-          ) {
-            answer +=
-              this.alpha[
-                this.alpha.indexOf(this.messageInput[i]) -
-                  this.alpha.indexOf(this.keyInput[i]) +
-                  26
-              ];
+          if (this.alpha.indexOf(message[i]) - this.alpha.indexOf(key[i]) < 0)
+          {
+            answer += this.alpha[this.alpha.indexOf(message[i]) - this.alpha.indexOf(key[i]) + 26];
           } else {
-            answer +=
-              this.alpha[
-                this.alpha.indexOf(this.messageInput[i]) -
-                  (this.alpha.indexOf(this.keyInput[i]) % 26)
-              ];
+            answer +=this.alpha[this.alpha.indexOf(message[i]) - (this.alpha.indexOf(key[i]) % 26)];
           }
         }
       }
-      this.encryptInput = answer;
+      this.encryptInput = this.checkUpperLowerCase(answer);
     },
     changeMode() {
       this.mode = !this.mode;
@@ -135,8 +125,7 @@ export default defineComponent({
     },
     generateKey() {
       let key = "";
-      let message = this.messageInput.replace(/\s/g, "");
-      while (key.length < message.length) {
+      while (key.length < 26) {
         let rndInt = Math.random() * 26 + 1;
         rndInt = parseInt(String(rndInt));
         if (key.includes(this.alpha[rndInt - 1])) {
@@ -147,12 +136,36 @@ export default defineComponent({
       }
       this.keyInput = key;
     },
-    checkMessage(key:string) {
-      let message = this.messageInput.replace(/\s/g, "");
-      if (key.length > message.length) {
-        this.keyInput = key.substring(0, key.length - 1);
+    checkUpperLowerCase(str:String) {
+      let text = [];
+      let message = this.messageInput;
+      const isUpperCase = (str:String) => str === str.toUpperCase();
+      for (let i = 0; i < message.length; i++) {
+        if (message[i] == " ") {
+          text.push(" ");
+        } else {
+          isUpperCase(message[i]) ? text.push(str[i].toUpperCase()) : text.push(str[i].toLowerCase());
+        }
       }
+      return text.join("");
     },
+    checkKey(key:String, message:String) {
+      if (key.length != 26) {
+        alert("Key must contain 26 letters");
+        return true;
+      }
+      if (key.match(/[^A-Z]/)) {
+        alert("Key must contain only letters");
+        return true;
+      }
+      for (let i = 0; i < message.length; i++) {
+        if (key[i] == this.alpha[i]) {
+          alert("Key must not same position as alphabet");
+          return true;
+        }
+      }
+      return false;
+    }
   },
 });
 </script>

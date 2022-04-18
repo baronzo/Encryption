@@ -15,7 +15,7 @@
     width: 75%
     height: 90%
     justify-content: center
-    .inside-box
+    .inside-box-left
       width: 45%
       .box-title
         font-size: 1.25rem
@@ -42,6 +42,74 @@
         background-color: deepskyblue
         border-radius: 3px
         height: 60px
+        -webkit-user-select: none
+        -moz-user-select: none
+        -ms-user-select: none
+        user-select: none
+        &:hover
+          background-color: #0c728d
+          cursor: pointer
+    .inside-box-right
+      width: 45%
+      .box-title
+        font-size: 1.25rem
+        padding: 10px 0 10px 0
+      .button-area
+        display: flex
+        justify-content: center
+        #button-swap
+          font-weight: bold
+          color: white
+          display: flex
+          align-items: center
+          justify-content: center
+          margin-top: 20px
+          background-color: deepskyblue
+          border-radius: 3px
+          height: 60px
+          width: 60px
+          -webkit-user-select: none
+          -moz-user-select: none
+          -ms-user-select: none
+          user-select: none
+          &:hover
+            background-color: #0c728d
+            cursor: pointer
+            #i-swap
+              transform: scale(1.175)
+              transition: 0.5s
+        .swapIcon .fa-arrows-alt-v
+          display: none
+        .swapIcon:hover .fa-arrows-alt-v
+          display: inline-block
+        .swapIcon:hover .fa-arrow-down
+          display: none
+      .input-box
+        border: 1px solid rgb(0, 0, 0, 0.25)
+        border-radius: 3px
+        height: 31.5%
+        #input
+          border: none
+          outline: none
+          width: 100%
+          height: 100%
+          padding: 10px 0 0 10px
+          font-size: 1.1rem
+          resize: none
+      .button
+        font-weight: bold
+        color: white
+        display: flex
+        align-items: center
+        justify-content: center
+        margin-top: 20px
+        background-color: deepskyblue
+        border-radius: 3px
+        height: 60px
+        -webkit-user-select: none
+        -moz-user-select: none
+        -ms-user-select: none
+        user-select: none
         &:hover
           background-color: #0c728d
           cursor: pointer
